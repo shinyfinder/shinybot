@@ -29,9 +29,10 @@ module.exports = {
 					const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
 					// gitconfigs
 					try {
-					await simpleGit.init();
-					simpleGit.addConfig('user.email', 'none');
-					simpleGit.addConfig('user.name', 'sf');
+					/*
+					//simpleGit.init();
+					//simpleGit.addConfig('user.email', 'none');
+					//simpleGit.addConfig('user.name', 'sf');
 
 					// add remote repo url as origin to repo
 					simpleGitPromise.removeRemote('origin');
@@ -61,6 +62,7 @@ module.exports = {
 					},(failed)=> {
 						console.log('repo push failedd');
 					});
+					*/
 				}
 				catch(e) {console.log(e);};
 

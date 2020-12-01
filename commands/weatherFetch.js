@@ -43,7 +43,7 @@ module.exports = {
 							.then(function onRemoteAdd (addRemoteResult) {})
 							.then(() => simpleGit.fetch(gitURL,'master', 'all'))
 							.then(function onFetch (fetchResult) {console.log('fetched');})
-							.then(() => simpleGit.reset('hard','origin/main'))
+							.then(() => simpleGit.reset('hard','origin/master'))
 							.then(function onReset (resetResult) {console.log('reset');})
 							.then(() => simpleGit.checkout('weather'))
 							.then(function onCheckout (checkoutResult) {console.log('branch switched');})

@@ -29,6 +29,29 @@ module.exports = {
 					const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
 					// gitconfigs
 					try {
+
+						// if in master, make changes to file
+						// then, commit changes to github on master
+						// switch to weather
+						// git checkout master weather.json
+						// git commit -m 'message'
+						// git push origin weather
+						// git checkout master
+						//console.log(simpleGit.branch(["--show-current"]));
+						simpleGit.checkout('weather')
+						.then(
+							(success) => {
+								console.log(success);
+							}, (failed) => {
+								console.log(failed);
+							});
+						simpleGitPromise.status()
+						.then(
+							(success) => {
+								console.log(success);
+							}, (failed) => {
+								console.log(failed);
+							});
 					/*
 					//simpleGit.init();
 					//simpleGit.addConfig('user.email', 'none');
@@ -67,7 +90,7 @@ module.exports = {
 				catch(e) {console.log(e);};
 
 
-				})
+			})
 
 			});
 			

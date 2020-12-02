@@ -23,6 +23,29 @@ client.once('ready', () => {
 	console.log('Ready!');
 });
 
+// update weather on startup
+client.once('ready', () => {
+	client.commands.get('weatherFetch').execute();
+})
+
+// get the date/time
+client.on('ready', () => {
+	var d = new Date();
+	var min = d.getMinutes();
+
+	// determine how many minutes until 10 after
+	var timeoutDelay = 10 - min;
+	if (timeoutDelay <= 0) {
+		timeoutDelay = timeoutDelay + 60;
+	}
+
+	// run once again on next 00:10, then every hour afterwards.
+	setTimeout(function() {client.commands.get('weatherFetch').execute();}, timeoutDelay*60*1000)
+	.then(() => setInterval(function() {client.commands.get('weatherFetch').execute();}, 60*60*1000))
+	.catch(err => console.log(err));
+	
+})
+
 
 client.on('message', message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;

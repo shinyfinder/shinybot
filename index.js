@@ -42,7 +42,7 @@ client.on('ready', () => {
 	// run once again on next 00:10, then every hour afterwards.
 	setTimeout(function() {
 		client.commands.get('weatherFetch').execute();
-		setInterval(function() {client.commands.get('weatherFetch').execute();}, 60*60*1000)
+		setInterval(function() {client.commands.get('weatherFetch').execute();}, 60*60*1000);
 	}, timeoutDelay*60*1000);
 	
 	

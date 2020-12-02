@@ -33,8 +33,8 @@ client.on('ready', () => {
 	var d = new Date();
 	var min = d.getMinutes();
 
-	// determine how many minutes until 10 after
-	var timeoutDelay = 10 - min;
+	// determine how many minutes until 15 after
+	var timeoutDelay = 15 - min;
 	if (timeoutDelay <= 0) {
 		timeoutDelay = timeoutDelay + 60;
 	}

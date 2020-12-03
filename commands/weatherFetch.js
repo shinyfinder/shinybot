@@ -2,7 +2,12 @@ const zlib = require('zlib');
 const fs = require('fs');
 const simpleGit = require('simple-git') ();
 const simpleGitPromise = require('simple-git/promise') ();
-const config = require('../config.json');
+if (fs.existsSync("../config.json")) {
+	const config = require("../config.json");
+} else {
+	const config = process.env;
+}
+//const config = require('../config.json');
 
 module.exports = {
 	name: "weatherFetch",

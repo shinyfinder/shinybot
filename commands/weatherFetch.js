@@ -6,6 +6,7 @@ if (fs.existsSync("../config.json")) {
 	const config = require("../config.json");
 } else {
 	const config = process.env;
+	console.log(config.test);
 }
 //const config = require('../config.json');
 

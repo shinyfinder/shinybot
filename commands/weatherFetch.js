@@ -24,12 +24,13 @@ module.exports = {
 				} else {
 					const config = process.env;
 					console.log(config.test);
-				}
 					// push to github
 					const repo = 'shinybot';
 					const user = config.gituser;
 					const pwd = config.gitpwd;
 					const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
+				}
+
 					// gitconfigs
 					try {
 
@@ -67,12 +68,12 @@ module.exports = {
 							.catch(err => console.log(err));
 						}))						
 						.catch(err => console.log(err));
-						
+
 					}
 					catch(e) {console.log(e);};
 
 
-					
+
 
 				});
 			

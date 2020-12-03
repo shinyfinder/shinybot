@@ -44,8 +44,8 @@ module.exports = {
 						//console.log(simpleGit.branch(["--show-current"]));
 						simpleGit.init()
 						.then(function onInit (initResult) {console.log('initialized');})
-						.then(() => simpleGit.removeRemote('origin'))
-						.then(function onRemoteRemove (removeRemoteResult) {})
+						//.then(() => simpleGit.removeRemote('origin'))
+						//.then(function onRemoteRemove (removeRemoteResult) {})
 						.then(() => simpleGit.addRemote('origin',gitURL))
 						.then(function onRemoteAdd (addRemoteResult) {})
 						.then(() => simpleGit.fetch(gitURL,'master', 'all'))

@@ -30,17 +30,20 @@ module.exports = {
 						// git push origin weather
 						// git checkout master
 						//console.log(simpleGit.branch(["--show-current"]));
-						if (await fs.exists("../config.json")) {
+
+						// see if path exists
+						try {
+							await fs.promise.access("../config.json");
 							const config = require("../config.json");
-						} else {
+						} catch {
 							const config = process.env;
-							console.log(config.test);
 							// push to github
 							const repo = 'shinybot';
 							const user = config.gituser;
 							const pwd = config.gitpwd;
 							const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
 						}
+
 				simpleGit.init()
 				.then(function onInit (initResult) {console.log('initialized');})
 				.then(() => simpleGit.removeRemote('origin'))

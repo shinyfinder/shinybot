@@ -32,22 +32,29 @@ module.exports = {
 						//console.log(simpleGit.branch(["--show-current"]));
 
 						// see if path exists
-						try {
-							await fs.promise.access("../config.json");
-							const config = require("../config.json");
-							const repo = 'shinybot';
-							const user = config.gituser;
-							const pwd = config.gitpwd;
-							const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
-							gitUpdate(gitURL);
-						} catch {
-							const config = process.env;
-							const repo = 'shinybot';
-							const user = config.gituser;
-							const pwd = config.gitpwd;
-							const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
-							gitUpdate(gitURL);
-						}
+						fs.access("./config.json", error => {
+							if (!error) {
+								const config = require("../config.json");
+								const repo = 'shinybot';
+								const user = config.gituser;
+								const pwd = config.gitpwd;
+								const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
+								console.log('exists');
+								gitUpdate(gitURL);
+							} else {
+								const config = process.env;
+								const repo = 'shinybot';
+								const user = config.gituser;
+								const pwd = config.gitpwd;
+								const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
+								console.log('does not exist');
+								gitUpdate(gitURL);
+							}
+						});
+							
+						
+							
+						
 
 						function gitUpdate(gitURL) {
 							simpleGit.init()

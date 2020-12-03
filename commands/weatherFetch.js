@@ -35,49 +35,55 @@ module.exports = {
 						try {
 							await fs.promise.access("../config.json");
 							const config = require("../config.json");
-						} catch {
-							const config = process.env;
-							// push to github
 							const repo = 'shinybot';
 							const user = config.gituser;
 							const pwd = config.gitpwd;
 							const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
+							gitUpdate(gitURL);
+						} catch {
+							const config = process.env;
+							const repo = 'shinybot';
+							const user = config.gituser;
+							const pwd = config.gitpwd;
+							const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
+							gitUpdate(gitURL);
 						}
 
-				simpleGit.init()
-				.then(function onInit (initResult) {console.log('initialized');})
-				.then(() => simpleGit.removeRemote('origin'))
-				.then(function onRemoteRemove (removeRemoteResult) {})
-				.then(() => simpleGit.addRemote('origin',gitURL))
-				.then(function onRemoteAdd (addRemoteResult) {})
-				.then(() => simpleGit.fetch(gitURL,'master', 'all'))
-				.then(function onFetch (fetchResult) {console.log('fetched');})
-				.then(() => simpleGit.reset('hard','origin/master'))
-				.then(function onReset (resetResult) {console.log('reset');})
-				.then(() => simpleGit.checkout('weather'))
-				.then(function onCheckout (checkoutResult) {console.log('branch switched');})
-				.then(() => fs.writeFile('weather.json', text, function (err) {
-					if (err) return console.log(err);
-					console.log('write done');
-					simpleGit.add('weather.json')
-					.then(function onAdd (addResult) {console.log('file added');})
-					.then(() => simpleGit.commit('update weather'))
-					.then(function onCommit (commitResult) {console.log('file committed');})
-					.then(() => simpleGit.push('origin','weather'))
-					.then(function onPush (pushResult) {console.log('result pushed');})
-					.then(() => simpleGit.checkout('master'))
-					.then(function onCheckoutReset (checkoutResetResult) {console.log('returned to master');})
-					.catch(err => console.log(err));
-				}))						
-				.catch(err => console.log(err));
+						function gitUpdate(gitURL) {
+							simpleGit.init()
+							.then(function onInit (initResult) {console.log('initialized');})
+							.then(() => simpleGit.removeRemote('origin'))
+							.then(function onRemoteRemove (removeRemoteResult) {})
+							.then(() => simpleGit.addRemote('origin',gitURL))
+							.then(function onRemoteAdd (addRemoteResult) {})
+							.then(() => simpleGit.fetch(gitURL,'master', 'all'))
+							.then(function onFetch (fetchResult) {console.log('fetched');})
+							.then(() => simpleGit.reset('hard','origin/master'))
+							.then(function onReset (resetResult) {console.log('reset');})
+							.then(() => simpleGit.checkout('weather'))
+							.then(function onCheckout (checkoutResult) {console.log('branch switched');})
+							.then(() => fs.writeFile('weather.json', text, function (err) {
+								if (err) return console.log(err);
+								console.log('write done');
+								simpleGit.add('weather.json')
+								.then(function onAdd (addResult) {console.log('file added');})
+								.then(() => simpleGit.commit('update weather'))
+								.then(function onCommit (commitResult) {console.log('file committed');})
+								.then(() => simpleGit.push('origin','weather'))
+								.then(function onPush (pushResult) {console.log('result pushed');})
+								.then(() => simpleGit.checkout('master'))
+								.then(function onCheckoutReset (checkoutResetResult) {console.log('returned to master');})
+								.catch(err => console.log(err));
+							}))						
+							.catch(err => console.log(err));
+						}
+					}
+					catch(e) {console.log(e);};
 
-			}
-			catch(e) {console.log(e);};
 
 
 
-
-		});
+				});
 			
 
 			

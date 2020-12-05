@@ -113,7 +113,7 @@ module.exports = {
 								.then(function onCommit (commitResult) {console.log('file committed');})
 								.then(() => simpleGit.push('origin','weather'))
 								.then(function onPush (pushResult) {console.log('result pushed');})
-								.then(() => simpleGit.checkout('master'))
+								.then(() => simpleGit.checkout('master', '--force'))
 								.then(function onCheckoutReset (checkoutResetResult) {console.log('returned to master');})
 								.then(() => simpleGit.rm('.git','-rf'))
 								.then(function onCheckoutReset (checkoutResetResult) {console.log('deleted .git');})

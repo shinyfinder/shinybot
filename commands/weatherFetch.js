@@ -40,7 +40,7 @@ module.exports = {
 								const pwd = config.gitpwd;
 								const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
 								console.log('exists');
-								gitUpdate(gitURL);
+								gitUpdateLocal(gitURL);
 							} else {
 								const config = process.env;
 								const repo = 'shinybot';
@@ -48,7 +48,7 @@ module.exports = {
 								const pwd = config.gitpwd;
 								const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
 								console.log('does not exist');
-								gitUpdate(gitURL);
+								gitUpdateHeroku(gitURL);
 							}
 						});
 							
@@ -56,11 +56,38 @@ module.exports = {
 							
 						
 
-						function gitUpdate(gitURL) {
+						function gitUpdateLocal(gitURL) {
 							simpleGit.init()
 							.then(function onInit (initResult) {console.log('initialized');})
 							.then(() => simpleGit.removeRemote('origin'))
 							.then(function onRemoteRemove (removeRemoteResult) {})
+							.then(() => simpleGit.addRemote('origin',gitURL))
+							.then(function onRemoteAdd (addRemoteResult) {})
+							.then(() => simpleGit.fetch(gitURL,'master', 'all'))
+							.then(function onFetch (fetchResult) {console.log('fetched');})
+							.then(() => simpleGit.reset('hard','origin/master'))
+							.then(function onReset (resetResult) {console.log('reset');})
+							.then(() => simpleGit.checkout('weather'))
+							.then(function onCheckout (checkoutResult) {console.log('branch switched');})
+							.then(() => fs.writeFile('weather.json', text, function (err) {
+								if (err) return console.log(err);
+								console.log('write done');
+								simpleGit.add('weather.json')
+								.then(function onAdd (addResult) {console.log('file added');})
+								.then(() => simpleGit.commit('update weather'))
+								.then(function onCommit (commitResult) {console.log('file committed');})
+								.then(() => simpleGit.push('origin','weather'))
+								.then(function onPush (pushResult) {console.log('result pushed');})
+								.then(() => simpleGit.checkout('master'))
+								.then(function onCheckoutReset (checkoutResetResult) {console.log('returned to master');})
+								.catch(err => console.log(err));
+							}))						
+							.catch(err => console.log(err));
+						}
+
+						function gitUpdateHeroku(gitURL) {
+							simpleGit.init()
+							.then(function onInit (initResult) {console.log('initialized');})
 							.then(() => simpleGit.addRemote('origin',gitURL))
 							.then(function onRemoteAdd (addRemoteResult) {})
 							.then(() => simpleGit.fetch(gitURL,'master', 'all'))

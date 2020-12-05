@@ -115,8 +115,11 @@ module.exports = {
 								.then(function onPush (pushResult) {console.log('result pushed');})
 								.then(() => simpleGit.checkout('origin/master', ['--force']))
 								.then(function onCheckoutReset (checkoutResetResult) {console.log('returned to master');})
-								.then(() => simpleGit.rm('.git','-r'))
-								.then(function onRemove (removeResult) {'.git deleted'})
+								.then(() => fs.rmdir('.git',{'recursive': true}, function (err) {
+									if (err) return console.log(err);
+									console.log('git removed');
+								}))
+								
 								.catch(err => console.log(err));
 							}))						
 							.catch(err => console.log(err));

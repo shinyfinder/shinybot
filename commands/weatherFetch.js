@@ -88,6 +88,14 @@ module.exports = {
 						function gitUpdateHeroku(gitURL) {
 							simpleGit.init()
 							.then(function onInit (initResult) {console.log('initialized');})
+
+							.then(() => simpleGit.addConfig('user.email','none'))
+							.then(function onEmail (emailResult) {})
+							.then(() => simpleGit.addConfig('user.name','sf'))
+							.then(function onInit (initResult) {})
+
+							.then(() => simpleGit.addRemote('origin',gitURL))
+							.then(function onInit (initResult) {console.log('initialized');})
 							.then(() => simpleGit.addRemote('origin',gitURL))
 							.then(function onRemoteAdd (addRemoteResult) {'added remote'})
 							.then(() => simpleGit.remote('update'))
@@ -109,6 +117,8 @@ module.exports = {
 								.then(function onPush (pushResult) {console.log('result pushed');})
 								.then(() => simpleGit.checkout('master'))
 								.then(function onCheckoutReset (checkoutResetResult) {console.log('returned to master');})
+								.then(() => simpleGit.rm('.git','-rf'))
+								.then(function onCheckoutReset (checkoutResetResult) {console.log('deleted .git');})
 								.catch(err => console.log(err));
 							}))						
 							.catch(err => console.log(err));

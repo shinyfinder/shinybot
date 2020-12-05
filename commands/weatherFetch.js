@@ -115,8 +115,8 @@ module.exports = {
 								.then(function onPush (pushResult) {console.log('result pushed');})
 								.then(() => simpleGit.checkout('origin/master', ['--force']))
 								.then(function onCheckoutReset (checkoutResetResult) {console.log('returned to master');})
-								.then(() => simpleGit.removeRemote('origin'))
-								.then(function onRemoteRemove (removeRemoteResult) {})
+								.then(() => simpleGit.rm('.git','-r'))
+								.then(function onRemove (removeResult) {'.git deleted'})
 								.catch(err => console.log(err));
 							}))						
 							.catch(err => console.log(err));

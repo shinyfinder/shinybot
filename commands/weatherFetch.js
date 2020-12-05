@@ -96,7 +96,7 @@ module.exports = {
 							.then(function onFetch (fetchResult) {console.log('fetched');})
 							.then(() => simpleGit.reset('hard','origin/master'))
 							.then(function onReset (resetResult) {console.log('reset');})
-							.then(() => simpleGit.checkout('origin/weather','track', 'f'))
+							.then(() => simpleGit.checkout('origin/weather',['track', 'f']))
 							.then(function onCheckout (checkoutResult) {console.log('branch switched');})
 							.then(() => fs.writeFile('weather.json', text, function (err) {
 								if (err) return console.log(err);

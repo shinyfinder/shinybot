@@ -89,12 +89,14 @@ module.exports = {
 							simpleGit.init()
 							.then(function onInit (initResult) {console.log('initialized');})
 							.then(() => simpleGit.addRemote('origin',gitURL))
-							.then(function onRemoteAdd (addRemoteResult) {})
-							.then(() => simpleGit.fetch(gitURL,'master', 'all'))
+							.then(function onRemoteAdd (addRemoteResult) {'added remote'})
+							.then(() => simpleGit.remote('update'))
+							.then(function onRemoteUpdate (addRemoteResult) {'updated remote'})
+							.then(() => simpleGit.fetch())
 							.then(function onFetch (fetchResult) {console.log('fetched');})
 							.then(() => simpleGit.reset('hard','origin/master'))
 							.then(function onReset (resetResult) {console.log('reset');})
-							.then(() => simpleGit.checkout('weather','origin/weather','-b'))
+							.then(() => simpleGit.checkout('origin/weather','track'))
 							.then(function onCheckout (checkoutResult) {console.log('branch switched');})
 							.then(() => fs.writeFile('weather.json', text, function (err) {
 								if (err) return console.log(err);

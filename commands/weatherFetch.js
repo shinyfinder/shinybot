@@ -95,8 +95,6 @@ module.exports = {
 							.then(function onInit (initResult) {})
 
 							.then(() => simpleGit.addRemote('origin',gitURL))
-							.then(function onInit (initResult) {console.log('initialized');})
-							.then(() => simpleGit.addRemote('origin',gitURL))
 							.then(function onRemoteAdd (addRemoteResult) {'added remote'})
 							.then(() => simpleGit.remote('update'))
 							.then(function onRemoteUpdate (addRemoteResult) {'updated remote'})

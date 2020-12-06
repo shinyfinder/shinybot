@@ -23,8 +23,9 @@ module.exports = {
 
 			async function fetchURL(config) {
 				//const res = await fetch('https://raw.githubusercontent.com/shinyfinder/hello-world/master/weather_14.json.gz');
-				const res = await fetch(`http://bulk.openweathermap.org/snapshot/weather_14.json.gz?appid=${config.owkey}`);
+				const res = await fetch(`http://dataservice.accuweather.com/currentconditions/v1/topcities/150?apikey=${config.accukey}`);
 				const buffer = await res.buffer();
+				console.log(res);
 				unZip(res,buffer);
 			}
 

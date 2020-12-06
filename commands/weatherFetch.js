@@ -11,13 +11,26 @@ module.exports = {
 	aliases: ['weather','wf'],
 	execute: async (message) => {
 		try {
-			const res = await fetch('https://raw.githubusercontent.com/shinyfinder/hello-world/master/weather_14.json.gz');
-			const buffer = await res.buffer();
+			fs.access("./config.json", error => {
+				if (!error) {
+					var config = require("../config.json");
+					fetchURL(config);
+				} else {
+					var config = process.env;
+					fetchURL(config);
+				}
+			});
 
-			//const text = await res.text();
-			zlib.gunzip(buffer, (err,buffer) => {
-				if (err) {throw err;};
-				var text = buffer.toString('utf8');
+			async function fetchURL(config) {
+				const res = await fetch('https://raw.githubusercontent.com/shinyfinder/hello-world/master/weather_14.json.gz');
+				const buffer = await res.buffer();
+				unZip(res,buffer);
+			}
+
+			function unZip(res,buffer) {			
+				zlib.gunzip(buffer, (err,buffer) => {
+					if (err) {throw err;};
+					var text = buffer.toString('utf8');
 
 					// gitconfigs
 					try {
@@ -34,7 +47,7 @@ module.exports = {
 						// see if path exists
 						fs.access("./config.json", error => {
 							if (!error) {
-								const config = require("../config.json");
+								var config = require("../config.json");
 								const repo = 'shinybot';
 								const user = config.gituser;
 								const pwd = config.gitpwd;
@@ -42,7 +55,7 @@ module.exports = {
 								console.log('exists');
 								gitUpdateLocal(gitURL);
 							} else {
-								const config = process.env;
+								var config = process.env;
 								const repo = 'shinybot';
 								const user = config.gituser;
 								const pwd = config.gitpwd;
@@ -51,9 +64,9 @@ module.exports = {
 								gitUpdateHeroku(gitURL);
 							}
 						});
-							
+
 						
-							
+
 						
 
 						function gitUpdateLocal(gitURL) {
@@ -131,12 +144,12 @@ module.exports = {
 
 
 				});
-			
 
-			
-		} catch (err) {
-			return console.log(err);
-		}
+}
 
-	}
+} catch (err) {
+	return console.log(err);
+}
+
+}
 };

@@ -88,7 +88,7 @@ module.exports = {
 							.then(function onReset (resetResult) {console.log('reset');})
 							.then(() => simpleGit.checkout('weather'))
 							.then(function onCheckout (checkoutResult) {console.log('branch switched');})
-							.then(() => fs.writeFile('weather.json', json, function (err) {
+							.then(() => fs.writeFile('weather.json', JSON.stringify(json), function (err) {
 								if (err) return console.log(err);
 								console.log('write done');
 								simpleGit.add('weather.json')
@@ -123,7 +123,7 @@ module.exports = {
 							.then(function onReset (resetResult) {console.log('reset');})
 							.then(() => simpleGit.checkout('origin/weather',['--track', '--force']))
 							.then(function onCheckout (checkoutResult) {console.log('branch switched');})
-							.then(() => fs.writeFile('weather.json', json, function (err) {
+							.then(() => fs.writeFile('weather.json', JSON.stringify(json), function (err) {
 								if (err) return console.log(err);
 								console.log('write done');
 								simpleGit.add('weather.json')

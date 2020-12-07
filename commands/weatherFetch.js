@@ -23,20 +23,25 @@ module.exports = {
 
 			async function fetchURL(config) {
 				//const res = await fetch('https://raw.githubusercontent.com/shinyfinder/hello-world/master/weather_14.json.gz');
-				const res = await fetch(`http://dataservice.accuweather.com/currentconditions/v1/topcities/150?apikey=${config.accukey}`);
-				const buffer = await res.buffer();
-				console.log(res);
-				unZip(res,buffer);
+				//const res = await fetch(`http://dataservice.accuweather.com/currentconditions/v1/topcities/150?apikey=${config.accukey}`);
+				//const buffer = await res.buffer();
+				
+				
+				//const res = await fetch(`http://dataservice.accuweather.com/currentconditions/v1/topcities/150?apikey=${config.accukey}`);
+				const res = await fetch('https://raw.githubusercontent.com/shinyfinder/hello-world/master/accuRes.json');
+				const json = await res.json();
+				console.log(json);
+				unZip();
 			}
 
-			function unZip(res,buffer) {			
-				zlib.gunzip(buffer, (err,buffer) => {
+			function unZip() {			
+				/*zlib.gunzip(buffer, (err,buffer) => {
 					if (err) {throw err;};
 					var text = buffer.toString('utf8');
 
 					// gitconfigs
 					try {
-
+*/
 						// if in master, make changes to file
 						// then, commit changes to github on master
 						// switch to weather
@@ -72,6 +77,7 @@ module.exports = {
 						
 
 						function gitUpdateLocal(gitURL) {
+							return;
 							simpleGit.init()
 							.then(function onInit (initResult) {console.log('initialized');})
 							.then(() => simpleGit.removeRemote('origin'))
@@ -101,6 +107,7 @@ module.exports = {
 						}
 
 						function gitUpdateHeroku(gitURL) {
+							return;
 							simpleGit.init()
 							.then(function onInit (initResult) {console.log('initialized');})
 
@@ -139,13 +146,13 @@ module.exports = {
 							}))						
 							.catch(err => console.log(err));
 						}
-					}
-					catch(e) {console.log(e);};
+					//}
+					//catch(e) {console.log(e);};
 
 
 
 
-				});
+				//});
 
 }
 

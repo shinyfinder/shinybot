@@ -77,7 +77,6 @@ module.exports = {
 						
 
 						function gitUpdateLocal(gitURL) {
-							return;
 							simpleGit.init()
 							.then(function onInit (initResult) {console.log('initialized');})
 							.then(() => simpleGit.removeRemote('origin'))
@@ -107,7 +106,6 @@ module.exports = {
 						}
 
 						function gitUpdateHeroku(gitURL) {
-							return;
 							simpleGit.init()
 							.then(function onInit (initResult) {console.log('initialized');})
 

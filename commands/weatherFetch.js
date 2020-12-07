@@ -30,7 +30,6 @@ module.exports = {
 				//const res = await fetch(`http://dataservice.accuweather.com/currentconditions/v1/topcities/150?apikey=${config.accukey}`);
 				const res = await fetch('https://raw.githubusercontent.com/shinyfinder/hello-world/master/accuRes.json');
 				const json = await res.json();
-				console.log(json);
 				unZip();
 			}
 
@@ -89,7 +88,7 @@ module.exports = {
 							.then(function onReset (resetResult) {console.log('reset');})
 							.then(() => simpleGit.checkout('weather'))
 							.then(function onCheckout (checkoutResult) {console.log('branch switched');})
-							.then(() => fs.writeFile('weather.json', text, function (err) {
+							.then(() => fs.writeFile('weather.json', json, function (err) {
 								if (err) return console.log(err);
 								console.log('write done');
 								simpleGit.add('weather.json')

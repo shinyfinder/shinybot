@@ -30,10 +30,10 @@ module.exports = {
 				//const res = await fetch(`http://dataservice.accuweather.com/currentconditions/v1/topcities/150?apikey=${config.accukey}`);
 				const res = await fetch('https://raw.githubusercontent.com/shinyfinder/hello-world/master/accuRes.json');
 				const json = await res.json();
-				unZip();
+				unZip(json);
 			}
 
-			function unZip() {			
+			function unZip(json) {			
 				/*zlib.gunzip(buffer, (err,buffer) => {
 					if (err) {throw err;};
 					var text = buffer.toString('utf8');
@@ -59,7 +59,7 @@ module.exports = {
 								const pwd = config.gitpwd;
 								const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
 								console.log('exists');
-								gitUpdateLocal(gitURL);
+								gitUpdateLocal(gitURL, json);
 							} else {
 								var config = process.env;
 								const repo = 'shinybot';
@@ -67,7 +67,7 @@ module.exports = {
 								const pwd = config.gitpwd;
 								const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
 								console.log('does not exist');
-								gitUpdateHeroku(gitURL);
+								gitUpdateHeroku(gitURL, json);
 							}
 						});
 
@@ -75,7 +75,7 @@ module.exports = {
 
 						
 
-						function gitUpdateLocal(gitURL) {
+						function gitUpdateLocal(gitURL, json) {
 							simpleGit.init()
 							.then(function onInit (initResult) {console.log('initialized');})
 							.then(() => simpleGit.removeRemote('origin'))
@@ -104,7 +104,7 @@ module.exports = {
 							.catch(err => console.log(err));
 						}
 
-						function gitUpdateHeroku(gitURL) {
+						function gitUpdateHeroku(gitURL, json) {
 							simpleGit.init()
 							.then(function onInit (initResult) {console.log('initialized');})
 
@@ -123,7 +123,7 @@ module.exports = {
 							.then(function onReset (resetResult) {console.log('reset');})
 							.then(() => simpleGit.checkout('origin/weather',['--track', '--force']))
 							.then(function onCheckout (checkoutResult) {console.log('branch switched');})
-							.then(() => fs.writeFile('weather.json', text, function (err) {
+							.then(() => fs.writeFile('weather.json', json, function (err) {
 								if (err) return console.log(err);
 								console.log('write done');
 								simpleGit.add('weather.json')

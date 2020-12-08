@@ -24,7 +24,7 @@ module.exports = {
 			//.setImage(posts[randomnumber].data.url)
 			//.addField("Other info:", "Up votes: " + posts[randomnumber].data.ups + " / Comments: " + posts[randomnumber].data.num_comments)
 			//.setFooter("Kittens provided by r/kittens")
-			message.channel.send(randomnumber);
+			//message.channel.send(randomnumber);
 			message.channel.send(posts[randomnumber].data.url);
 		} catch (err) {
 			return console.log(err);

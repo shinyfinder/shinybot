@@ -30,10 +30,16 @@ module.exports = {
 				//const res = await fetch(`http://dataservice.accuweather.com/currentconditions/v1/topcities/150?apikey=${config.accukey}`);
 				const res = await fetch('https://raw.githubusercontent.com/shinyfinder/hello-world/master/accuRes.json');
 				const json = await res.json();
-				unZip(json);
+
+				var layer = 'wind_new';
+				var URL = `https://tile.openweathermap.org/map/${layer}/{z}/{x}/{y}.png?appid=${config.owkey}`;
+				const imgRes = await fetch(URL);
+				const imgBuffer = await res.buffer();
+
+				unZip(json, imgBuffer);
 			}
 
-			function unZip(json) {			
+			function unZip(json, img) {			
 				/*zlib.gunzip(buffer, (err,buffer) => {
 					if (err) {throw err;};
 					var text = buffer.toString('utf8');
@@ -59,7 +65,7 @@ module.exports = {
 								const pwd = config.gitpwd;
 								const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
 								console.log('exists');
-								gitUpdateLocal(gitURL, json);
+								gitUpdateLocal(gitURL, json, img);
 							} else {
 								var config = process.env;
 								const repo = 'shinybot';
@@ -67,7 +73,7 @@ module.exports = {
 								const pwd = config.gitpwd;
 								const gitURL = `https://${user}:${pwd}@github.com/${user}/${repo}`;
 								console.log('does not exist');
-								gitUpdateHeroku(gitURL, json);
+								gitUpdateHeroku(gitURL, json, img);
 							}
 						});
 
@@ -75,7 +81,7 @@ module.exports = {
 
 						
 
-						function gitUpdateLocal(gitURL, json) {
+						function gitUpdateLocal(gitURL, json, img) {
 							simpleGit.init()
 							.then(function onInit (initResult) {console.log('initialized');})
 							.then(() => simpleGit.removeRemote('origin'))
@@ -91,20 +97,26 @@ module.exports = {
 							.then(() => fs.writeFile('weather.json', JSON.stringify(json,null,' '), function (err) {
 								if (err) return console.log(err);
 								console.log('write done');
-								simpleGit.add('weather.json')
-								.then(function onAdd (addResult) {console.log('file added');})
-								.then(() => simpleGit.commit('update weather'))
-								.then(function onCommit (commitResult) {console.log('file committed');})
-								.then(() => simpleGit.push('origin','weather'))
-								.then(function onPush (pushResult) {console.log('result pushed');})
-								.then(() => simpleGit.checkout('master'))
-								.then(function onCheckoutReset (checkoutResetResult) {console.log('returned to master');})
-								.catch(err => console.log(err));
+								fs.writeFile('wind.png',img, function (err) {
+									if (err) return console.log(err);
+									console.log('wind write done');
+									simpleGit.add(['weather.json', 'wind.png'])
+									.then(function onAdd (addResult) {console.log('file added');})
+									.then(() => simpleGit.commit('update weather'))
+									.then(function onCommit (commitResult) {console.log('file committed');})
+									.then(() => simpleGit.push('origin','weather'))
+									.then(function onPush (pushResult) {console.log('result pushed');})
+									.then(() => simpleGit.checkout('master'))
+									.then(function onCheckoutReset (checkoutResetResult) {console.log('returned to master');})
+									.catch(err => console.log(err));
+
+								})
+
 							}))						
 							.catch(err => console.log(err));
 						}
 
-						function gitUpdateHeroku(gitURL, json) {
+						function gitUpdateHeroku(gitURL, json, img) {
 							simpleGit.init()
 							.then(function onInit (initResult) {console.log('initialized');})
 
@@ -143,6 +155,12 @@ module.exports = {
 							}))						
 							.catch(err => console.log(err));
 						}
+
+
+
+						
+
+
 					//}
 					//catch(e) {console.log(e);};
 

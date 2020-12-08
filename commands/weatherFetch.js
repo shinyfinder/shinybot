@@ -34,7 +34,7 @@ module.exports = {
 				var layer = 'wind_new';
 				var URL = `https://tile.openweathermap.org/map/${layer}/{z}/{x}/{y}.png?appid=${config.owkey}`;
 				const imgRes = await fetch(URL);
-				const imgBuffer = await res.buffer();
+				const imgBuffer = await imgRes.buffer();
 
 				unZip(json, imgBuffer);
 			}

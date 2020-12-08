@@ -138,20 +138,27 @@ module.exports = {
 							.then(() => fs.writeFile('weather.json', JSON.stringify(json,null,' '), function (err) {
 								if (err) return console.log(err);
 								console.log('write done');
-								simpleGit.add('weather.json')
-								.then(function onAdd (addResult) {console.log('file added');})
-								.then(() => simpleGit.commit('update weather'))
-								.then(function onCommit (commitResult) {console.log('file committed');})
-								.then(() => simpleGit.push('origin','weather'))
-								.then(function onPush (pushResult) {console.log('result pushed');})
-								.then(() => simpleGit.checkout('origin/master', ['--force']))
-								.then(function onCheckoutReset (checkoutResetResult) {console.log('returned to master');})
-								.then(() => fs.rmdir('.git',{'recursive': true}, function (err) {
+								fs.writeFile('wind.png',img, function (err) {
 									if (err) return console.log(err);
-									console.log('git removed');
-								}))
+									console.log('wind write done');
+									simpleGit.add(['weather.json', 'wind.png'])
+									.then(function onAdd (addResult) {console.log('file added');})
+									.then(() => simpleGit.commit('update weather'))
+									.then(function onCommit (commitResult) {console.log('file committed');})
+									.then(() => simpleGit.push('origin','weather'))
+									.then(function onPush (pushResult) {console.log('result pushed');})
+									.then(() => simpleGit.checkout('origin/master', ['--force']))
+									.then(function onCheckoutReset (checkoutResetResult) {console.log('returned to master');})
+									.then(() => fs.rmdir('.git',{'recursive': true}, function (err) {
+										if (err) return console.log(err);
+										console.log('git removed');
+									}))
 								
-								.catch(err => console.log(err));
+									.catch(err => console.log(err));
+
+								})
+
+
 							}))						
 							.catch(err => console.log(err));
 						}

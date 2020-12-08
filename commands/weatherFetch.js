@@ -32,7 +32,7 @@ module.exports = {
 				const json = await res.json();
 
 				var layer = 'wind_new';
-				var URL = `https://tile.openweathermap.org/map/${layer}/3/30/-20.png?appid=${config.owkey}`;
+				var URL = `https://tile.openweathermap.org/map/${layer}/3/30/30.png?appid=${config.owkey}`;
 				const imgRes = await fetch(URL);
 				const imgBuffer = await imgRes.buffer();
 

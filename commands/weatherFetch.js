@@ -31,7 +31,7 @@ module.exports = {
 				const res = await fetch('https://raw.githubusercontent.com/shinyfinder/hello-world/master/accuRes.json');
 				const json = await res.json();
 
-				var layer = 'wind_new';
+				//var layer = 'wind_new';
 				var URL = 'http://openweathermap.org/img/wn/01d@2x.png';
 				//var URL = `https://tile.openweathermap.org/map/${layer}/3/1/1.png?appid=${config.owkey}`;
 				const imgRes = await fetch(URL);

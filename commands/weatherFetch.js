@@ -27,8 +27,8 @@ module.exports = {
 				//const buffer = await res.buffer();
 				
 				
-				//const res = await fetch(`http://dataservice.accuweather.com/currentconditions/v1/topcities/150?apikey=${config.accukey}`);
-				const res = await fetch('https://raw.githubusercontent.com/shinyfinder/hello-world/master/accuRes.json');
+				const res = await fetch(`http://dataservice.accuweather.com/currentconditions/v1/topcities/150?apikey=${config.accukey}`);
+				//const res = await fetch('https://raw.githubusercontent.com/shinyfinder/hello-world/master/accuRes.json');
 				const json = await res.json();
 
 				//var layer = 'wind_new';

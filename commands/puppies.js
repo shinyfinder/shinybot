@@ -1,7 +1,7 @@
 module.exports = {
-	name: "bunnies",
+	name: "puppies",
 	description: 'Pulls random image of a puppy posted to r/puppies',
-	aliases: ['rabbit', 'bunny'],
+	aliases: ['puppy', 'dog'],
 	usage: ' ',
 	
 	execute: async (message) => {

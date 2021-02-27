@@ -6,7 +6,7 @@ module.exports = {
 	
 	execute: async (message) => {
 		try {
-			const res = await fetch('https://www.reddit.com/r/Bunnies/top/.json?sort=top&t=all&limit=500');
+			const res = await fetch('https://www.reddit.com/r/Bunnies/top/.json?sort=top&t=all&limit=50');
 			const json = await res.json();
 			const posts = json.data.children
 				.filter(f => message.channel.nsfw || !f.nsfw);
